@@ -1,0 +1,27 @@
+name: Sync to CNB
+
+on:
+  push:
+    branches:
+      - main
+      - main
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      
+      - name: Sync to CNB
+        run: |
+          docker run --rm \
+            -v $:$ \
+            -w $ \
+            -e PLUGIN_TARGET_URL="https://cnb.cool/pudding-2024/FrontendNext.git" \
+            -e PLUGIN_AUTH_TYPE="https" \
+            -e PLUGIN_USERNAME="cnb" \
+            -e PLUGIN_PASSWORD=$ \
+            -e PLUGIN_FORCE="true" \
+            tencentcom/git-sync
