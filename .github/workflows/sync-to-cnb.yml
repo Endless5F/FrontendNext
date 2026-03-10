@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - master
-  workflow_dispatch:  # 添加这行，支持手动触发
+  workflow_dispatch:
 
 jobs:
   sync:
@@ -18,11 +18,11 @@ jobs:
       - name: Sync to CNB
         run: |
           docker run --rm \
-            -v "$:$" \
-            -w "$" \
+            -v "${{ github.workspace }}:${{ github.workspace }}" \
+            -w "${{ github.workspace }}" \
             -e PLUGIN_TARGET_URL="https://cnb.cool/pudding-2024/FrontendNext.git" \
             -e PLUGIN_AUTH_TYPE="https" \
             -e PLUGIN_USERNAME="cnb" \
-            -e PLUGIN_PASSWORD="$" \
+            -e PLUGIN_PASSWORD="${{ secrets.CNB_TOKEN }}" \
             -e PLUGIN_FORCE="true" \
             tencentcom/git-sync
